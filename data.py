@@ -12,6 +12,7 @@ class data:
     img=None
     location=np.zeros((len(points)))
     
-    if __name__ == '__main__':
-        print(location.shape)
+if __name__ == '__main__':
+    d = data()
+    print(d.location.shape)
     

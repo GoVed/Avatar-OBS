@@ -158,13 +158,16 @@ class interactive_tool:
      
     #On mouse click
     def mouse_clicked(self,event): 
+        
+        #If frame is paused
         if not self.update_image:
-            if self.poscounter >= len(data.points):
-                self.tempdata.save()
-                self.reset_data()
+            
+            #Set the position and increase the counter
             self.tempdata.location[self.poscounter,1]=self.px
             self.tempdata.location[self.poscounter,0]=self.py
             self.poscounter+=1
+            
+            #Check if every position is counter
             if self.poscounter >= len(data.points):
                 self.tempdata.save()
                 self.reset_data()
@@ -176,9 +179,12 @@ class interactive_tool:
         del self.tempdata
         self.UIe['start_button'].configure(text = "Pause frame and set positions to save")
         
+    #On reset
+    def undo(self,event=None):         
+        self.poscounter=max(0,self.poscounter-1)
         
-    def save_data(self):
-        pass
+        
+            
         
     #Main run for tk UI
     def run(self):
@@ -202,7 +208,7 @@ class interactive_tool:
         self.show_frame()
         self.win.bind('<Motion>', self.motion)
         self.win.bind("<Button-1>", self.mouse_clicked)
-        self.win.bind("<Button-3>", self.reset_data)
+        self.win.bind("<Button-3>", self.undo)
         self.win.mainloop()
         self.close()
         
